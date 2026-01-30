@@ -25,13 +25,20 @@ else
 	print
 end if
 
+prepFont = function(f)
+	for c in " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+		f.getCharImage c
+	end for
+end function
+
 if globals.hasIndex("font") then
 	print "Keeping font from previous run..."
 else
 	print "Loading font..."
 	font = bmfFonts.Font.load("/sys/fonts/Georgia-24.bmf")
 	print "Prepping font..."
-	font.print " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", 0, 0
+	//	font.print " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", 0, 0
+	prepFont font
 end if
 
 if globals.hasIndex("font2") then
@@ -40,7 +47,8 @@ else
 	print "Loading font2..."
 	font2 = bmfFonts.Font.load("Georgia-48.bmf")
 	print "Prepping font2..."
-	font2.print " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", 0, 0
+	//	font2.print " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", 0, 0
+	prepFont font2
 end if
 
 apiUrl = function(route)
