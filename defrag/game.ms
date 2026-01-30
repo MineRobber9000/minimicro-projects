@@ -74,11 +74,12 @@ dropBox = function(boxSprite, fakeSprite)
 	bestDist = 100000000
 	for box in boxen
 		dist = utils.squaredDistance(box, fakeSprite)
-		if dist<bestDist and box!=boxSprite then
+		if dist<bestDist then
 			bestDist = dist
 			nearestBox = box
 		end if
 	end for
+	if nearestBox==boxSprite then return
 	if nearestBox==null or nearestBox.image!=empty then
 		utils.executeMoves [utils.MoveData.createIndex(fakeSprite)]
 		return
