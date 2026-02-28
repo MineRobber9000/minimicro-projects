@@ -126,7 +126,10 @@ while true
 	if key.available then
 		k = key.get
 		if k.code==27 then run "startup"
-		if k=="z" and utils.swapCount>0 then utils.undo(boxen)
+		if k=="z" and utils.swapCount>0 then
+			utils.undo(boxen)
+			textUI
+		end if
 		if k=="r" and won then run
 	end if
 	if mouse.button then
