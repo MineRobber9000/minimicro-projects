@@ -24,6 +24,20 @@ imgMap = new utils.ImageMap
 imgMap.offsetX = betsX
 imgMap.offsetY = betsY
 
+textUI = function
+	text.clear
+	text.row = 25
+	text.column = 0
+	message = "Chips: "
+	message += outer.playerChips
+	if betAmounts!={} then
+		message += " (+"
+		message += betAmounts.sum
+		message += " in bets)"
+	end if
+	print message
+end function
+
 ChipSprite = new Sprite
 ChipSprite.image = file.loadImage("/sys/pics/gamePieces/pieceWhite_border11.png")
 ChipSprite.tint = "#ff0000"
@@ -58,6 +72,7 @@ getChipSprite = function(bet)
 end function
 
 playerChips = 50
+textUI
 
 BetDialog = textUtil.Dialog.make("Place a bet")
 BetDialog.height += 1
@@ -86,6 +101,7 @@ BetDialog.handleKey = function(k)
 	return false
 end function
 BetDialog.show = function(bet)
+	text.clear
 	self.done = false
 	self.bet = bet
 	while mouse.button
@@ -106,7 +122,10 @@ BetDialog.show = function(bet)
 		if playerChips!=1 then self.message+="s"
 		self.msgLines = self.message.split(char(10))
 		btnHit = super.show
-		if btnHit==self.cancelBtn then return
+		if btnHit==self.cancelBtn then
+			textUI
+			return
+		end if
 		if btnHit==self.okBtn and playerChips>0 then
 			count+=1
 			outer.playerChips-=1
@@ -198,6 +217,7 @@ deckSprite.update = function
 				textUtil.Dialog.make("Game Over","You ran out of chips!").show
 				exit
 			end if
+			textUI
 			filterChipSprites
 			// reshuffle on ace/joker/deckout
 			// (that last one shouldn't be possible but just in case)
